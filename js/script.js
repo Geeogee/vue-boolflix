@@ -16,7 +16,7 @@ function initVue() {
                 if (this.searchKey.length > 0) {
                     
                     axios
-                        .get("https://api.themoviedb.org/3/search/movie", {
+                        .get("https://api.themoviedb.org/3/search/multi", {
                 
                                 params: {
                                     "api_key" : "06c75c4950ae895301a9d9124ffca723",
@@ -26,10 +26,17 @@ function initVue() {
                         .then(data => {
     
                             this.results = data.data.results;
-                            console.log(this.results)
                         })
                         .catch(() => console.log("Error!"))
                 }
+            }
+        },
+
+        computed: {
+
+            arrayFilter: function() {
+
+                return this.results.filter(result => result.media_type != "person")
             }
         }
     })
