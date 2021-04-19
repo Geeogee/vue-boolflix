@@ -29,6 +29,15 @@ function initVue() {
                         })
                         .catch(() => console.log("Error!"))
                 }
+            },
+
+            getImageURL: function(film) {
+
+                const baseURL = "https://image.tmdb.org/t/p/";
+                const size = "w154";
+                const path = film.poster_path;
+
+                return `${baseURL}${size}${path}`
             }
         },
 
@@ -37,6 +46,22 @@ function initVue() {
             arrayFilter: function() {
 
                 return this.results.filter(result => result.media_type != "person")
+            }
+        },
+
+        filters: {
+
+            showStars: function(vote) {
+
+                const fullStar = `<i class="fas fa-star"></i>`;
+                const emptyStar = `<i class="far fa-star"></i>`;
+                const fullStarValue = Math.round(vote / 2);
+                const emptyStarValue = 5 - fullStarValue;
+
+                let voteString = fullStar.repeat(fullStarValue) + emptyStar.repeat(emptyStarValue);
+                
+
+                return voteString
             }
         }
     })
