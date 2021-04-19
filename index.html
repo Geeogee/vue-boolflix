@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoolFix</title>
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Vue Js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <!-- Axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <!-- Javascript -->
+    <script src="js/script.js"></script>
+
+
+</head>
+<body>
+    
+    <h1 id="main-title">Test</h1>
+    <div id="app">
+        <div id="search-bar">
+            <input type="text" placeholder="Search a film" v-model="searchKey" @keyup.enter="getSearchResults">
+            <button @click="getSearchResults">Search <i class="fas fa-search"></i></button>
+        </div>
+
+        <div id="container-search-results">
+            <div v-for="film in results" class="wrapper-film">
+                <div class="wrapper-titles">
+                    <span class="wrapper-titles__title">
+                        {{ film.title }}
+                    </span>
+                    <span class="wrapper-titles__original-title">
+                        {{ film.original_title }}
+                    </span>
+                </div>
+                <span v-if="(film.original_language == 'en')" class="wrapper-film__lang">
+                    <i class="fas fa-flag-usa"></i>
+                </span>
+                <span v-else class="wrapper-film__lang">
+                    <i class="fas fa-flag"></i>
+                </span>
+                <span class="wrapper-film__vote">
+                    {{ film.vote_average }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

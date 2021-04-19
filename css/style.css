@@ -1,0 +1,52 @@
+/* GENERAL CSS */
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    background-color: #454B66;
+}
+
+/* MAIN */
+#main-title {
+
+    color: #FF8D5C;
+}
+#app {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#app > #container-search-results {
+    width: 80%;
+    
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#container-search-results > .wrapper-film {
+
+    background-color: #959bb7;
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    flex-basis: calc(25% - 20px);
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.wrapper-film > .wrapper-titles {
+
+    display: flex;
+    flex-direction: column;
+    min-height: 150px;
+}
