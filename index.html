@@ -59,11 +59,14 @@
                     <img v-else :src="getImageURL(film)">
                 </div>
                 <!-- Language -->
-                <span v-if="(film.original_language == 'en')" class="wrapper-film__lang">
+                <!-- <span v-if="(film.original_language == 'en')" class="wrapper-film__lang">
                     <i class="fas fa-flag-usa"></i>
                 </span>
                 <span v-else class="wrapper-film__lang">
                     <i class="fas fa-flag"></i>
+                </span> -->
+                <span class="wrapper-film__lang">
+                    <img height="32" :src="`https://cdn.ipregistry.co/flags/twemoji/${getLanguage(film.original_language)}.svg`">
                 </span>
                 <!-- Votes -->
                 <span class="wrapper-film__vote" v-html="$options.filters.showStars(film.vote_average)">

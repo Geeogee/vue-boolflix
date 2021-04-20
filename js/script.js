@@ -31,6 +31,19 @@ function initVue() {
                 }
             },
 
+            getLanguage: function(lang) {
+
+                switch(lang) {
+
+                    case "en":
+                        return "gb";
+                    case "it":
+                        return "it";
+                    case "ja":
+                        return "jp"; 
+                }
+            },
+
             getImageURL: function(film) {
 
                 const baseURL = "https://image.tmdb.org/t/p/";
@@ -57,10 +70,8 @@ function initVue() {
                 const emptyStar = `<i class="far fa-star"></i>`;
                 const fullStarValue = Math.round(vote / 2);
                 const emptyStarValue = 5 - fullStarValue;
-
-                let voteString = fullStar.repeat(fullStarValue) + emptyStar.repeat(emptyStarValue);
-                
-
+                let voteString = `${fullStar.repeat(fullStarValue)}${emptyStar.repeat(emptyStarValue)}`;
+            
                 return voteString
             }
         }
