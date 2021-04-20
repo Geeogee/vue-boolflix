@@ -7,6 +7,9 @@ function initVue() {
 
             "searchKey" : "avengers",
             "results" : [],
+            "allGenres" : [],
+            "genres" : [],
+            "filterKey" : "",
             "infos" : false
         },
 
@@ -23,10 +26,23 @@ function initVue() {
                                     "api_key" : "06c75c4950ae895301a9d9124ffca723",
                                     "query" : this.searchKey
                                 }
-                            })
+                        })
                         .then(data => {
     
                             this.results = data.data.results;
+                        })
+                        .catch(() => console.log("Error!"));
+                    
+                    axios
+                        .get("https://api.themoviedb.org/3/genre/movie/list", {
+
+                                params: {
+                                    "api_key" : "06c75c4950ae895301a9d9124ffca723"
+                                }
+                        })
+                        .then(data => {
+
+                            this.allGenres = data.data.genres;
                         })
                         .catch(() => console.log("Error!"))
                 }
@@ -60,7 +76,37 @@ function initVue() {
             arrayFilter: function() {
 
                 return this.results.filter(result => result.media_type != "person")
+            },
+
+            getGenres: function() {
+
+                this.results.forEach(result => {
+
+                    result.genre_ids.forEach(genre_id => {
+
+                        if (!this.genres.includes(genre_id))
+                            this.genres.push(genre_id)
+                    })
+                })
+
+                return this.genres
+            },
+
+            filterByGenre: function() {
+
+                if (this.filterKey == "") {
+
+                    return this.arrayFilter
+                } else {
+
+                    return this.arrayFilter.filter(result => {
+
+                        return result.genre_ids.includes(parseInt(this.filterKey));
+                    })
+                }
             }
+
+
         },
 
         filters: {

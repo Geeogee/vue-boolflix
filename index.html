@@ -30,6 +30,10 @@
             <a href="#">
                 <img id="logo" src="img/logo.png">
             </a>
+            <select v-model="filterKey">
+                <option value="" selected>All Genres</option>
+                <option v-for="genre in getGenres">{{ genre }}</option>
+            </select>
             <div id="search-bar">
                 <input id="search-field" type="text" placeholder="Search a film" v-model="searchKey" @keyup.enter="getSearchResults">
                 <button @click="getSearchResults"><i class="fas fa-search"></i></button>
@@ -38,7 +42,7 @@
         
         <main>
             <div id="container-search-results">
-                <div v-for="film in arrayFilter" class="wrapper-film" :class="(film.media_type == 'movie') ? 'movie' : 'tv'">
+                <div v-for="film in filterByGenre" class="wrapper-film" :class="(film.media_type == 'movie') ? 'movie' : 'tv'">
 
                     <div class="wrapper-image">
                         <img src="https://news.cinecitta.com/photo.aspx?s=1&w=850&path=%2Fpublic%2Fnews%2F0069%2F69239%2Fpadre_maronno.jpg" v-if="(film.poster_path == null)">
