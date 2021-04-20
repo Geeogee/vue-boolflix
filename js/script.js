@@ -5,8 +5,9 @@ function initVue() {
         el : "#app",
         data : {
 
-            "searchKey" : "",
-            "results" : []
+            "searchKey" : "avengers",
+            "results" : [],
+            "infos" : false
         },
 
         methods : {
@@ -47,7 +48,7 @@ function initVue() {
             getImageURL: function(film) {
 
                 const baseURL = "https://image.tmdb.org/t/p/";
-                const size = "w154";
+                const size = "w342";
                 const path = film.poster_path;
 
                 return `${baseURL}${size}${path}`
