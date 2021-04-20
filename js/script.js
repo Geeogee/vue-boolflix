@@ -7,8 +7,9 @@ function initVue() {
 
             "searchKey" : "avengers",
             "results" : [],
+            "movieGenres" : [],
+            "tvGenres" : [],
             "allGenres" : [],
-            "genres" : [],
             "filterKey" : "",
             "infos" : false
         },
@@ -16,9 +17,11 @@ function initVue() {
         methods : {
 
             getSearchResults: function() {
-            
+                
+                
                 if (this.searchKey.length > 0) {
                     
+                    // Get Movies and Tv Series
                     axios
                         .get("https://api.themoviedb.org/3/search/multi", {
                 
@@ -30,9 +33,11 @@ function initVue() {
                         .then(data => {
     
                             this.results = data.data.results;
+                            
                         })
                         .catch(() => console.log("Error!"));
                     
+                    // Get Movies Genres
                     axios
                         .get("https://api.themoviedb.org/3/genre/movie/list", {
 
@@ -42,9 +47,24 @@ function initVue() {
                         })
                         .then(data => {
 
-                            this.allGenres = data.data.genres;
+                            this.movieGenres = data.data.genres;
                         })
                         .catch(() => console.log("Error!"))
+
+                    // Get Tv Genres
+                    axios
+                        .get("https://api.themoviedb.org/3/genre/tv/list", {
+
+                            params: {
+                                "api_key" : "06c75c4950ae895301a9d9124ffca723"
+                            }
+                        })
+                        .then(data => {
+
+                            this.tvGenres = data.data.genres;
+                        })
+                        .catch(() => console.log("Error!"))
+
                 }
             },
 
@@ -80,16 +100,21 @@ function initVue() {
 
             getGenres: function() {
 
-                this.results.forEach(result => {
+                this.allGenres = [...this.movieGenres, ...this.tvGenres];
+                for (let i=0; i<this.allGenres.length; i++) {
 
-                    result.genre_ids.forEach(genre_id => {
+                    for (let j=i+1; j<this.allGenres.length; j++) {
 
-                        if (!this.genres.includes(genre_id))
-                            this.genres.push(genre_id)
-                    })
-                })
+                        if (this.allGenres[i].id == this.allGenres[j].id) {
 
-                return this.genres
+                            this.allGenres.splice(j,1)
+                        }
+                    }
+                }
+
+                this.allGenres.sort();
+                return this.allGenres
+               
             },
 
             filterByGenre: function() {
@@ -99,14 +124,18 @@ function initVue() {
                     return this.arrayFilter
                 } else {
 
-                    return this.arrayFilter.filter(result => {
+                    let id;
+                    this.allGenres.forEach(genre => {
 
-                        return result.genre_ids.includes(parseInt(this.filterKey));
+                        if (genre.name == this.filterKey) {
+                            id = genre.id;
+                        }
+                            
                     })
+
+                    return this.arrayFilter.filter(film => film.genre_ids.includes(id)); 
                 }
             }
-
-
         },
 
         filters: {
