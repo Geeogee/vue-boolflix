@@ -11,7 +11,8 @@ function initVue() {
             "tvGenres" : [],
             "allGenres" : [],
             "filterKey" : "",
-            "infos" : false
+            "infos" : false,
+            "cast" : []
         },
 
         methods : {
@@ -68,6 +69,33 @@ function initVue() {
                 }
             },
 
+            getCastInfos: function(id) {
+
+                axios
+                    .get(`https://api.themoviedb.org/3/movie/${id}/credits`, {
+
+                        params: {
+                            "api_key" : "06c75c4950ae895301a9d9124ffca723"
+                        }
+                    })
+                    .then(data => {
+
+                        this.cast = data.data.cast;
+                        this.showInfos(this.cast);
+                    })
+                    .catch(() => console.log("Errors!"))
+            },
+
+            showInfos: function(cast) {
+
+                for (let i=0; i<5; i++) {
+
+                    console.log(cast[i].name)
+                    // FINRIE DOMANI
+                }
+
+            },
+
             getLanguage: function(lang) {
 
                 switch(lang) {
@@ -84,7 +112,7 @@ function initVue() {
             getImageURL: function(film) {
 
                 const baseURL = "https://image.tmdb.org/t/p/";
-                const size = "w342";
+                const size = "w780";
                 const path = film.poster_path;
 
                 return `${baseURL}${size}${path}`
@@ -101,6 +129,8 @@ function initVue() {
             getGenres: function() {
 
                 this.allGenres = [...this.movieGenres, ...this.tvGenres];
+                console.log(this.allGenres);
+
                 for (let i=0; i<this.allGenres.length; i++) {
 
                     for (let j=i+1; j<this.allGenres.length; j++) {
@@ -111,6 +141,15 @@ function initVue() {
                         }
                     }
                 }
+
+                // Controllare metodo find
+                // Spread di un solo array
+                // Controllare se gli elementi del secondo array sono già presenti
+                // Altrimnti pushare
+
+                // Trasfomrare due oggetti in stringhe
+                // JSon stringfy()
+                // JSon parse
 
                 this.allGenres.sort();
                 return this.allGenres
@@ -135,14 +174,15 @@ function initVue() {
 
                     return this.arrayFilter.filter(film => film.genre_ids.includes(id)); 
                 }
-            }
+            },
+
         },
 
         filters: {
 
             showStars: function(vote) {
 
-                const fullStar = `<i class="fas fa-star"></i>`;
+                const fullStar = `<i class="fas fa-star yellow"></i>`;
                 const emptyStar = `<i class="far fa-star"></i>`;
                 const fullStarValue = Math.round(vote / 2);
                 const emptyStarValue = 5 - fullStarValue;

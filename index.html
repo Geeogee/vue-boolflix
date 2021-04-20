@@ -32,7 +32,7 @@
             </a>
             <select v-model="filterKey">
                 <option value="" selected>All Genres</option>
-                <option v-for="genre in getGenres">{{ genre.name }}</option>
+                <option value="genre.id" v-for="genre in getGenres">{{ genre.name }}</option>
             </select>
             <div id="search-bar">
                 <input id="search-field" type="text" placeholder="Search a film" v-model="searchKey" @keyup.enter="getSearchResults">
@@ -42,7 +42,7 @@
         
         <main>
             <div id="container-search-results">
-                <div v-for="film in filterByGenre" class="wrapper-film" :class="(film.media_type == 'movie') ? 'movie' : 'tv'">
+                <div @click="getCastInfos(film.id)" v-for="film in filterByGenre" class="wrapper-film" :class="(film.media_type == 'movie') ? 'movie' : 'tv'">
 
                     <div class="wrapper-image">
                         <img src="https://news.cinecitta.com/photo.aspx?s=1&w=850&path=%2Fpublic%2Fnews%2F0069%2F69239%2Fpadre_maronno.jpg" v-if="(film.poster_path == null)">
@@ -54,19 +54,19 @@
                             <!-- Movie -->
                             <div class="movie" v-if="(film.media_type == 'movie')">
                                 <span class="wrapper-titles__title">
-                                    {{ film.title }}
+                                   <strong>Title:</strong> {{ film.title }}
                                 </span>
                                 <span class="wrapper-titles__original-title">
-                                    {{ film.original_title }}
+                                    <strong>Original title:</strong> {{ film.original_title }}
                                 </span>
                             </div>
                             <!-- Tv Series -->
                             <div class="tv" v-if="(film.media_type == 'tv')">
                                 <span class="wrapper-titles__title">
-                                    {{ film.name }}
+                                    <strong>Name:</strong> {{ film.name }}
                                 </span>
                                 <span class="wrapper-titles__original-title">
-                                    {{ film.original_name }}
+                                    <strong>Original title:</strong> {{ film.original_name }}
                                 </span>
                             </div>
                         </div>
