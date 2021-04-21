@@ -143,7 +143,10 @@ function initVue() {
                         }
                     }
                 }
-                
+
+                // USING SET FOR ELIMATES DUPLICATES
+                // this.allGenres = [...new Set([...this.movieGenres, ...this.tvGenres])];
+
                 this.allGenres.sort();
 
                 // Get genre ids only for the searched films
