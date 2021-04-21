@@ -152,7 +152,9 @@ function initVue() {
                 // Get genre ids only for the searched films
                 this.results.forEach(film => {
 
-                    film.genre_ids.forEach(genre => {
+                    // ? abbreviazione per evitare if
+                    // se il codice è undefined
+                    film.genre_ids?.forEach(genre => {
 
                         if (!this.searchGenres.includes(genre))
                             this.searchGenres.push(genre);
