@@ -32,7 +32,7 @@
             </a>
             <select v-model="filterKey">
                 <option value="" selected>All Genres</option>
-                <option value="genre.id" v-for="genre in getGenres">{{ genre.name }}</option>
+                <option :value="genre.name" v-for="genre in getGenres">{{ genre.name }}</option>
             </select>
             <div id="search-bar">
                 <input id="search-field" type="text" placeholder="Search a film" v-model="searchKey" @keyup.enter="getSearchResults">
