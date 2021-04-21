@@ -13,7 +13,8 @@ function initVue() {
             "filterKey" : "",
             "infos" : false,
             "cast" : [],
-            "show" : false
+            "show" : false,
+            "movieID" : ""
         },
 
         methods : {
@@ -81,10 +82,10 @@ function initVue() {
                     })
                     .then(data => {
 
+                        this.movieID = data.data.id;
                         this.cast = data.data.cast.splice(0,5);
-                        console.log(this.cast);
+                        console.log(this.cast, this.movieID);
                         this.show = !this.show
-                        
                     })
                     .catch(() => console.log("Errors!"))
             },
@@ -145,8 +146,7 @@ function initVue() {
                 // JSon parse
 
                 this.allGenres.sort();
-                return this.allGenres
-               
+                return this.allGenres   
             },
 
             filterByGenre: function() {

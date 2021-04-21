@@ -72,7 +72,7 @@
                         </div>
                         <!-- Actors -->
                         <div @click="getCastInfos(film.id)">Click me</div>
-                        <div class="wrapper-actors" v-if="show">
+                        <div class="wrapper-actors" v-if="(show) && (film.id == movieID) ">
                             <div v-for="actor in cast" class="wrapper-actors__actor">
                                 {{ actor.name }}
                             </div>
