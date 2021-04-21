@@ -42,7 +42,7 @@
         
         <main>
             <div id="container-search-results">
-                <div @click="getCastInfos(film.id)" v-for="film in filterByGenre" class="wrapper-film" :class="(film.media_type == 'movie') ? 'movie' : 'tv'">
+                <div v-for="film in filterByGenre" class="wrapper-film" :class="(film.media_type == 'movie') ? 'movie' : 'tv'">
 
                     <div class="wrapper-image">
                         <img src="https://news.cinecitta.com/photo.aspx?s=1&w=850&path=%2Fpublic%2Fnews%2F0069%2F69239%2Fpadre_maronno.jpg" v-if="(film.poster_path == null)">
@@ -68,6 +68,13 @@
                                 <span class="wrapper-titles__original-title">
                                     <strong>Original title:</strong> {{ film.original_name }}
                                 </span>
+                            </div>
+                        </div>
+                        <!-- Actors -->
+                        <div @click="getCastInfos(film.id)">Click me</div>
+                        <div class="wrapper-actors" v-if="show">
+                            <div v-for="actor in cast" class="wrapper-actors__actor">
+                                {{ actor.name }}
                             </div>
                         </div>
                         <!-- Language -->

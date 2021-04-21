@@ -12,7 +12,8 @@ function initVue() {
             "allGenres" : [],
             "filterKey" : "",
             "infos" : false,
-            "cast" : []
+            "cast" : [],
+            "show" : false
         },
 
         methods : {
@@ -80,20 +81,12 @@ function initVue() {
                     })
                     .then(data => {
 
-                        this.cast = data.data.cast;
-                        this.showInfos(this.cast);
+                        this.cast = data.data.cast.splice(0,5);
+                        console.log(this.cast);
+                        this.show = !this.show
+                        
                     })
                     .catch(() => console.log("Errors!"))
-            },
-
-            showInfos: function(cast) {
-
-                for (let i=0; i<5; i++) {
-
-                    console.log(cast[i].name)
-                    // FINRIE DOMANI
-                }
-
             },
 
             getLanguage: function(lang) {
