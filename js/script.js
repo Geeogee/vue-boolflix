@@ -5,11 +5,12 @@ function initVue() {
         el : "#app",
         data : {
 
-            "searchKey" : "avengers",
+            "searchKey" : "",
             "results" : [],
             "movieGenres" : [],
             "tvGenres" : [],
             "allGenres" : [],
+            "searchGenres" : [],
             "filterKey" : "",
             "infos" : false,
             "cast" : [],
@@ -36,6 +37,7 @@ function initVue() {
                         .then(data => {
     
                             this.results = data.data.results;
+
                             
                         })
                         .catch(() => console.log("Error!"));
@@ -85,8 +87,6 @@ function initVue() {
                         this.movieID = data.data.id;
                         this.show = !this.show;
                         this.cast = data.data.cast.splice(0,5);
-                        console.log(this.cast, this.movieID, this.show);
-                        
                     })
                     .catch(() => console.log("Errors!"))
             },
@@ -123,7 +123,16 @@ function initVue() {
 
             getGenres: function() {
 
+                this.searchGenres = [];
+
+                // Spread Movies and TV Series genres
+                // In one array
+
                 this.allGenres = [...this.movieGenres, ...this.tvGenres];
+                // Compare the i-element with every other element
+                // inside the array
+                // If there are duplicates
+                // Using splice() the duplicate will be removed
                 for (let i=0; i<this.allGenres.length; i++) {
 
                     for (let j=i+1; j<this.allGenres.length; j++) {
@@ -134,18 +143,32 @@ function initVue() {
                         }
                     }
                 }
-
-                // Controllare metodo find
-                // Spread di un solo array
-                // Controllare se gli elementi del secondo array sono già presenti
-                // Altrimnti pushare
-
-                // Trasfomrare due oggetti in stringhe
-                // JSon stringfy()
-                // JSon parse
-
+                
                 this.allGenres.sort();
-                return this.allGenres   
+
+                // Get genre ids only for the searched films
+                this.results.forEach(film => {
+
+                    film.genre_ids.forEach(genre => {
+
+                        if (!this.searchGenres.includes(genre))
+                            this.searchGenres.push(genre);
+                    })
+                })
+
+                // Only returns generes 
+                // Of searched films
+                this.allGenres.forEach(genre => {
+
+                    if (this.searchGenres.includes(genre.id)) {
+
+                        const index = this.searchGenres.indexOf(genre.id);
+                        const name = genre.name;
+                        this.searchGenres[index] = name;
+                    }   
+                })
+    
+                return this.searchGenres
             },
 
             filterByGenre: function() {
@@ -160,10 +183,8 @@ function initVue() {
 
                         if (genre.name == this.filterKey) {
                             id = genre.id;
-                        }
-                            
+                        }  
                     })
-
                     return this.arrayFilter.filter(film => film.genre_ids.includes(id)); 
                 }
             },

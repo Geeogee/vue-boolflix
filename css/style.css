@@ -29,6 +29,14 @@ header {
     height: 50px;
 }
 
+#filters {
+
+    background-color: #000;
+    border: 1px solid #FFF;
+    color: #FFF;
+    padding: 5px;
+}
+
 #search-field {
 
     border: 1px solid #FFF;
@@ -80,16 +88,14 @@ main {
     margin: 10px;
     border-radius: 4px;
     position: relative;
+    transition: all .4s
 }
 
-#container-search-results > .wrapper-film.movie {
+#container-search-results > .wrapper-film:hover {
 
-    background-color: #8EB5CD;
-}
-
-#container-search-results > .wrapper-film.tv {
-
-    background-color: #457B9D;
+    transform: scale(1.1);
+    border-radius: 0;
+    border: 2px solid #FFF;
 }
 
 .wrapper-titles > * {
@@ -134,6 +140,21 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.wrapper-titles .wrapper-titles__title {
+
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.wrapper-titles .wrapper-titles__original-title {
+
+    font-size: 10px;
+}
+.wrapper-infos > .wrapper-actors {
+
+    min-height: 100px;
 }
 
 .wrapper-film__lang .flag {

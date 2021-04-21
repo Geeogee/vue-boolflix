@@ -30,9 +30,9 @@
             <a href="#">
                 <img id="logo" src="img/logo.png">
             </a>
-            <select v-model="filterKey">
+            <select id="filters" v-model="filterKey">
                 <option value="" selected>All Genres</option>
-                <option :value="genre.name" v-for="genre in getGenres">{{ genre.name }}</option>
+                <option v-for="genre in getGenres">{{ genre }}</option>
             </select>
             <div id="search-bar">
                 <input id="search-field" type="text" placeholder="Search a film" v-model="searchKey" @keyup.enter="getSearchResults">
@@ -54,28 +54,32 @@
                             <!-- Movie -->
                             <div class="movie" v-if="(film.media_type == 'movie')">
                                 <span class="wrapper-titles__title">
-                                   <strong>Title:</strong> {{ film.title }}
+                                   {{ film.title }} 
                                 </span>
                                 <span class="wrapper-titles__original-title">
-                                    <strong>Original title:</strong> {{ film.original_title }}
+                                    {{ film.original_title }}
                                 </span>
                             </div>
                             <!-- Tv Series -->
                             <div class="tv" v-if="(film.media_type == 'tv')">
                                 <span class="wrapper-titles__title">
-                                    <strong>Name:</strong> {{ film.name }}
+                                    {{ film.name }}
                                 </span>
                                 <span class="wrapper-titles__original-title">
-                                    <strong>Original title:</strong> {{ film.original_name }}
+                                    {{ film.original_name }}
                                 </span>
                             </div>
                         </div>
                         <!-- Actors -->
-                        <div @click="getCastInfos(film.id)" :id="film.id">Click me</div>
-                        <div class="wrapper-actors" v-if="(film.id == movieID) && (show)">
-                            <div v-for="actor in cast" class="wrapper-actors__actor">
-                                {{ actor.name }}
+                        <div class="wrapper-actors">
+                            <div @click="getCastInfos(film.id)" :id="film.id"> 
+                                <strong>Actors <i class="fas fa-chevron-down"></i></strong> 
                             </div>
+                            <ul v-if="(film.id == movieID) && (show)">
+                                <li v-for="actor in cast" class="wrapper-actors__actor">
+                                    {{ actor.name }}
+                                </li>
+                            </ul>
                         </div>
                         <!-- Language -->
                         <span class="wrapper-film__lang">
