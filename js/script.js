@@ -83,9 +83,10 @@ function initVue() {
                     .then(data => {
 
                         this.movieID = data.data.id;
+                        this.show = !this.show;
                         this.cast = data.data.cast.splice(0,5);
-                        console.log(this.cast, this.movieID);
-                        this.show = !this.show
+                        console.log(this.cast, this.movieID, this.show);
+                        
                     })
                     .catch(() => console.log("Errors!"))
             },
@@ -123,8 +124,6 @@ function initVue() {
             getGenres: function() {
 
                 this.allGenres = [...this.movieGenres, ...this.tvGenres];
-                console.log(this.allGenres);
-
                 for (let i=0; i<this.allGenres.length; i++) {
 
                     for (let j=i+1; j<this.allGenres.length; j++) {

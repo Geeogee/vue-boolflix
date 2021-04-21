@@ -42,7 +42,7 @@
         
         <main>
             <div id="container-search-results">
-                <div v-for="film in filterByGenre" class="wrapper-film" :class="(film.media_type == 'movie') ? 'movie' : 'tv'">
+                <div @mouseleave="show = false" v-for="film in filterByGenre" class="wrapper-film" :class="(film.media_type == 'movie') ? 'movie' : 'tv'">
 
                     <div class="wrapper-image">
                         <img src="https://news.cinecitta.com/photo.aspx?s=1&w=850&path=%2Fpublic%2Fnews%2F0069%2F69239%2Fpadre_maronno.jpg" v-if="(film.poster_path == null)">
@@ -71,8 +71,8 @@
                             </div>
                         </div>
                         <!-- Actors -->
-                        <div @click="getCastInfos(film.id)">Click me</div>
-                        <div class="wrapper-actors" v-if="(show) && (film.id == movieID) ">
+                        <div @click="getCastInfos(film.id)" :id="film.id">Click me</div>
+                        <div class="wrapper-actors" v-if="(film.id == movieID) && (show)">
                             <div v-for="actor in cast" class="wrapper-actors__actor">
                                 {{ actor.name }}
                             </div>
